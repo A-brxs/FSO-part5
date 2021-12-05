@@ -17,3 +17,21 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.blog-tile {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.delete-button {
+  color: lightsalmon;
+  background-color: steelblue;
+}
+.delete-button:hover {
+  color: darksalmon;
+  border-color: darkslateblue;
+  border-width: 3px;
+}

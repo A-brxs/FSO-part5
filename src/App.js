@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import { ErrorNotification, PositiveNotification } from './components/Notifications'
+import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
+import Toggle from './components/Toggle'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState('')
+  const [updateBlog, setUpdatedBlog] = useState('')
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
-  const [title, setTitle] = useState('') 
-  const [author, setAuthor] = useState('') 
-  const [url, setUrl] = useState('') 
+
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [positiveMessage, setPositiveMessage] = useState(null)
@@ -20,7 +21,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [user,newBlog])
+  }, [user,newBlog,updateBlog])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -31,29 +32,6 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = async (event) => {
-    event.preventDefault()
-    console.log(event)
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url,
-    }
-    try {
-      await blogService
-        .create(blogObject)
-    } catch (exception) {
-      setErrorMessage('Missing information')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    showNotif(`Blog ${title} created for author ${author}`)
-    setNewBlog(blogObject)
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -109,45 +87,15 @@ const App = () => {
     </form>      
   )
 
-  const blogForm = () => ( 
-    <form onSubmit={addBlog}>
-      <div>
-        title
-          <input
-          type="text"
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
-      </div>
-      <div>
-        author
-          <input
-          type="text"
-          value={author}
-          name="Author"
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-      </div>
-      <div>
-        url
-          <input
-          type="url"
-          value={url}
-          name="URL"
-          onChange={({ target }) => setUrl(target.value)}
-        />
-      </div>
-      <button type="submit">Create</button>
-    </form>  
-  )
-
   const blogList = () => (
     <div>
       <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      {blogs
+        .sort( (a,b) => b.likes - a.likes )
+        .map(blog =>
+        <Blog loggedinUser={user} key={blog.id} blog={blog} setUpdatedBlog={setUpdatedBlog}/>
+        )
+      }
     </div>
   )
 
@@ -155,10 +103,12 @@ const App = () => {
     <button onClick={() => handleLougout()}>LOGOUT</button>
   )
   const showNotif = (msg) => {
-    setPositiveMessage(msg)
-    setTimeout(() => {
-      setPositiveMessage(null)
-    }, 5000)
+    if (errorMessage === null) {
+      setPositiveMessage(msg)
+      setTimeout(() => {
+        setPositiveMessage(null)
+      }, 5000)
+    }
   }
 
   return (
@@ -170,8 +120,10 @@ const App = () => {
       loginForm() :
       <div>
         <p>{user.name} logged-in</p>
+        <Toggle buttonLabel='Create blog'>
+          <BlogForm showNotif={showNotif} setErrorMessage={setErrorMessage} setNewBlog={setNewBlog} />
+        </Toggle>
         {logoutForm()}
-        {blogForm()}
         {blogList()}
       </div>
     }
