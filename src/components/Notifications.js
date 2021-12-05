@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ErrorNotification = ({message}) => {
+const ErrorNotification = ({ message }) => {
   if (message === null) {
     return null
   }
@@ -12,7 +12,7 @@ const ErrorNotification = ({message}) => {
   )
 }
 
-const PositiveNotification = ({message}) => {
+const PositiveNotification = ({ message }) => {
   if (message === null) {
     return null
   }
@@ -24,4 +24,4 @@ const PositiveNotification = ({message}) => {
   )
 }
 
-export {ErrorNotification, PositiveNotification}
+export { ErrorNotification, PositiveNotification }

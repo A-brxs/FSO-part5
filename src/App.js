@@ -4,14 +4,14 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Toggle from './components/Toggle'
 import blogService from './services/blogs'
-import loginService from './services/login' 
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState('')
   const [updateBlog, setUpdatedBlog] = useState('')
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [user,newBlog,updateBlog])
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const App = () => {
       })
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
 
       blogService.setToken(user.token)
       setUser(user)
@@ -67,7 +67,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -76,7 +76,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -84,7 +84,7 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 
   const blogList = () => (
@@ -93,7 +93,7 @@ const App = () => {
       {blogs
         .sort( (a,b) => b.likes - a.likes )
         .map(blog =>
-        <Blog loggedinUser={user} key={blog.id} blog={blog} setUpdatedBlog={setUpdatedBlog}/>
+          <Blog loggedinUser={user} key={blog.id} blog={blog} setUpdatedBlog={setUpdatedBlog}/>
         )
       }
     </div>
@@ -113,20 +113,20 @@ const App = () => {
 
   return (
     <div>
-    <h1>Blog system</h1>
-    <ErrorNotification message={errorMessage} />
-    <PositiveNotification message={positiveMessage} /> 
-    {user === null ?
-      loginForm() :
-      <div>
-        <p>{user.name} logged-in</p>
-        <Toggle buttonLabel='Create blog'>
-          <BlogForm showNotif={showNotif} setErrorMessage={setErrorMessage} setNewBlog={setNewBlog} />
-        </Toggle>
-        {logoutForm()}
-        {blogList()}
-      </div>
-    }
+      <h1>Blog system</h1>
+      <ErrorNotification message={errorMessage} />
+      <PositiveNotification message={positiveMessage} />
+      {user === null ?
+        loginForm() :
+        <div>
+          <p>{user.name} logged-in</p>
+          <Toggle buttonLabel='Create blog'>
+            <BlogForm showNotif={showNotif} setErrorMessage={setErrorMessage} setNewBlog={setNewBlog} />
+          </Toggle>
+          {logoutForm()}
+          {blogList()}
+        </div>
+      }
     </div>
   )
 }

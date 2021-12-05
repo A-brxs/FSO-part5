@@ -1,15 +1,16 @@
-import React,{useState} from 'react'
+import React,{ useState } from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 
-const Blog = ({blog,setUpdatedBlog,loggedinUser}) => {
+const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
   const [visible, setVisible] = useState(false)
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  
+
 
   const updateBlog = async () => {
     const blogObject = {
@@ -22,17 +23,17 @@ const Blog = ({blog,setUpdatedBlog,loggedinUser}) => {
     try {
       await blogService
         .like( blog.id, blogObject )
-        setUpdatedBlog(blog)
+      setUpdatedBlog(blog)
     } catch (exception) {
-        console.log(exception)
+      console.log(exception)
     }
   }
 
   const deleteBlog = async () => {
     if (window.confirm(`Do you really want to delete blog: ${blog.title}?`)) {
-      try { 
+      try {
         await blogService
-        .deleteBlog( blog.id )
+          .deleteBlog( blog.id )
         setUpdatedBlog(blog)
       } catch (exception) {
         console.log(exception)
@@ -41,16 +42,23 @@ const Blog = ({blog,setUpdatedBlog,loggedinUser}) => {
   }
 
   return (
-  <div className='blog-tile'>
-    <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility}>view</button>
-    <div style={showWhenVisible}>
-      <p>{blog.url}</p>
-      <p>Likes: {blog.likes} <button onClick={updateBlog}>like</button></p>
-      <p>{blog.author}</p>
-      {loggedinUser.username === blog.user.username && 
+    <div className='blog-tile'>
+      <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility}>view</button>
+      <div style={showWhenVisible}>
+        <p>{blog.url}</p>
+        <p>Likes: {blog.likes} <button onClick={updateBlog}>like</button></p>
+        <p>{blog.author}</p>
+        {loggedinUser.username === blog.user.username &&
         <button className='delete-button'onClick={() => deleteBlog()}>DELETE</button> }
+      </div>
     </div>
-  </div>
   )
 }
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  setUpdatedBlog: PropTypes.func.isRequired,
+  loggedinUser: PropTypes.object.isRequired
+}
+
 export default Blog
