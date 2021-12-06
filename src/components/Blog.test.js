@@ -111,10 +111,6 @@ describe('<Blog />', () => {
         id: '1770'
       }
     }
-    const user = {
-      username: 'test-user',
-      id: '1770'
-    }
 
     const mockHandler = jest.fn()
 

@@ -6,7 +6,7 @@ const ErrorNotification = ({ message }) => {
   }
 
   return (
-    <div className="error">
+    <div className="error" id='errorNotif'>
       {message}
     </div>
   )
@@ -18,7 +18,7 @@ const PositiveNotification = ({ message }) => {
   }
 
   return (
-    <div className="positive-notification">
+    <div className="positive-notification" id='positiveNotif'>
       {message}
     </div>
   )

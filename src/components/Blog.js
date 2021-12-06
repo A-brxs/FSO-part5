@@ -43,7 +43,7 @@ const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
   }
 
   return (
-    <div className='blog-tile'>
+    <div className='blog-tile' id='blog-tile'>
       <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility}>view</button>
       <p className="blog-author">{blog.author}</p>
       <div style={showWhenVisible} className='blog-toggable-info'>

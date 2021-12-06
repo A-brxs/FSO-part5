@@ -36,6 +36,7 @@ const BlogForm = ({ setNewBlog,showNotif,setErrorMessage }) => {
       title
         <input
           type="text"
+          id='title'
           value={title}
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
@@ -45,6 +46,7 @@ const BlogForm = ({ setNewBlog,showNotif,setErrorMessage }) => {
       author
         <input
           type="text"
+          id='author'
           value={author}
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
@@ -54,12 +56,13 @@ const BlogForm = ({ setNewBlog,showNotif,setErrorMessage }) => {
       url
         <input
           type="url"
+          id='url'
           value={url}
           name="URL"
           onChange={({ target }) => setUrl(target.value)}
         />
       </div>
-      <button type="submit">Create</button>
+      <button type="submit" id='create-button'>Create</button>
     </form>
   )
 }
