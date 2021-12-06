@@ -44,13 +44,13 @@ const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
 
   return (
     <div className='blog-tile' id='blog-tile'>
-      <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility}>view</button>
+      <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility} id='view-button'>view</button>
       <p className="blog-author">{blog.author}</p>
       <div style={showWhenVisible} className='blog-toggable-info'>
         <p className='blog-url'>{blog.url}</p>
-        <p className='blog-likes'>Likes: {blog.likes} <button className='like-button' onClick={updateBlog}>like</button></p>
+        <p className='blog-likes'>Likes: {blog.likes} <button id='like-button' className='like-button' onClick={updateBlog}>like</button></p>
         {loggedinUser.username === blog.user.username &&
-        <button className='delete-button'onClick={() => deleteBlog()}>DELETE</button> }
+        <button className='delete-button'id='delete-button' onClick={() => deleteBlog()}>DELETE</button> }
       </div>
     </div>
   )
