@@ -1,5 +1,4 @@
 import React,{ useState } from 'react'
-import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
 
@@ -21,24 +20,13 @@ const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
       title: blog.title
     }
     console.log('this is object: ',blogObject)
-    try {
-      await blogService
-        .like( blog.id, blogObject )
-      setUpdatedBlog(blog)
-    } catch (exception) {
-      // console.log(exception)
-    }
+    setUpdatedBlog(blog)
+
   }
 
   const deleteBlog = async () => {
     if (window.confirm(`Do you really want to delete blog: ${blog.title}?`)) {
-      try {
-        await blogService
-          .deleteBlog( blog.id )
-        setUpdatedBlog(blog)
-      } catch (exception) {
-        console.log(exception)
-      }
+      setUpdatedBlog(blog)
     }
   }
 
