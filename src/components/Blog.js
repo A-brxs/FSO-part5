@@ -25,7 +25,7 @@ const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
         .like( blog.id, blogObject )
       setUpdatedBlog(blog)
     } catch (exception) {
-      console.log(exception)
+      // console.log(exception)
     }
   }
 
@@ -44,10 +44,10 @@ const Blog = ({ blog,setUpdatedBlog,loggedinUser }) => {
   return (
     <div className='blog-tile'>
       <strong className="blog-title">{blog.title}</strong> <button onClick={toggleVisibility}>view</button>
-      <div style={showWhenVisible}>
-        <p>{blog.url}</p>
-        <p>Likes: {blog.likes} <button onClick={updateBlog}>like</button></p>
-        <p>{blog.author}</p>
+      <p className="blog-author">{blog.author}</p>
+      <div style={showWhenVisible} className='blog-toggable-info'>
+        <p className='blog-url'>{blog.url}</p>
+        <p className='blog-likes'>Likes: {blog.likes} <button className='like-button' onClick={updateBlog}>like</button></p>
         {loggedinUser.username === blog.user.username &&
         <button className='delete-button'onClick={() => deleteBlog()}>DELETE</button> }
       </div>
